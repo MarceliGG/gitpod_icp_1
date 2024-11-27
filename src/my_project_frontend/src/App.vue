@@ -1,28 +1,38 @@
 <script setup>
 import { ref } from 'vue';
 import { my_project_backend } from 'declarations/my_project_backend/index';
-let greeting = ref('');
+let chat = ref([]);
+let sending_status = ref(0);
+
+async function getChat() {
+  chat.value = await my_project_backend.get_chat();
+}
 
 async function handleSubmit(e) {
   e.preventDefault();
   const target = e.target;
-  const name = target.querySelector('#name').value;
-  await my_project_backend.greet(name).then((response) => {
-    greeting.value = response;
+  sending_status.value++;
+  my_project_backend.save_msg(target['message'].value).then(() => {
+    getChat();
+    sending_status.value--;
   });
+  target['message'].value = "";
 }
+
+getChat();
 </script>
 
 <template>
   <main>
-    <img src="/logo2.svg" alt="DFINITY logo" />
-    <br />
-    <br />
+    <section id="chat">
+      <div class="message" v-for="msg in chat.slice().reverse()">
+        {{ msg }}
+      </div>
+    </section>
     <form action="#" @submit="handleSubmit">
-      <label for="name">Enter your name: &nbsp;</label>
-      <input id="name" alt="Name" type="text" />
-      <button type="submit">Click Me!</button>
+      <input id="message" name="message" alt="Message" type="text" />
+      <button type="submit">Send</button>
     </form>
-    <section id="greeting">{{ greeting }}</section>
+    <div id="sending-status" v-if="sending_status > 0">Sending {{ sending_status }} message(s)..</div>
   </main>
 </template>
