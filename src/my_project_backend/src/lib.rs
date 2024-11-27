@@ -9,7 +9,7 @@ thread_local! {
     static MSG: RefCell<String> = RefCell::new(String::new())
 }
 
-#[ic_cdk::query]
+#[ic_cdk::update]
 fn save_msg(msg: String) {
     MSG.with(|static_msg| *static_msg.borrow_mut() = msg);
 }
