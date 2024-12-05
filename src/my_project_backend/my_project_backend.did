@@ -1,6 +1,9 @@
+type Message = record {
+    sender: text;
+    content: text;
+}
 service : {
-    "greet": (text) -> (text) query;
-    "save_msg": (text) -> ();
-    "get_chat": () -> (vec text) query;
+    "save_msg": (text, text) -> ();
+    "get_chat": () -> (vec Message) query;
     "clear_chat": () -> ();
 }
