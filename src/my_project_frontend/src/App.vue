@@ -60,7 +60,7 @@ getChat();
     <section id="inputs">
       <div id="message-input">
         <input id="message" name="message" alt="Message" type="text" @keyup.enter="send" @input="upd_msg_len"
-          placeholder="message" />
+          placeholder="message" maxlength="2000"/>
         <div>{{ msg_len }}/2000</div>
         <button @click="send">
           <img src="/send.svg" />
@@ -70,7 +70,7 @@ getChat();
         <div style="display: flex">
           <label for="username">Username:</label>
           <div id="username-wrapper">
-            <input id="username" name="sername" alt="UserName" type="text" placeholder="<anonymous>" @input="upd_un_len"/>
+            <input id="username" name="sername" alt="UserName" maxlength="100" type="text" placeholder="<anonymous>" @input="upd_un_len"/>
             <div>{{ un_len }}/100</div>
           </div>
         </div>

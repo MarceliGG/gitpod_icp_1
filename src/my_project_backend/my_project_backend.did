@@ -1,9 +1,15 @@
 type Message = record {
     sender: text;
     content: text;
-}
+};
+
+type Result = variant { 
+    Ok : text; 
+    Err : text; 
+};
+
 service : {
-    "save_msg": (text, text) -> ();
+    "save_msg": (text, text) -> (Result);
     "get_chat": () -> (vec Message) query;
     "clear_chat": () -> ();
 }
